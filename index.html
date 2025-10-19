@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>당신의 이름 – 포트폴리오</title>
+  <meta name="description" content="당신의 이름의 개인 홈페이지 및 포트폴리오" />
+  <meta name="color-scheme" content="light dark">
+  <meta property="og:title" content="당신의 이름 – 포트폴리오" />
+  <meta property="og:description" content="개발 · 설계 · 프로젝트 포트폴리오" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/og-image.png" />
+  <meta name="theme-color" content="#0ea5e9"/>
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    /* ====== Reset & Theme ====== */
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    :root{
+      --bg:#0b1020;
+      --panel:#11162a;
+      --soft:#1a2140;
+      --text:#eaf2ff;
+      --muted:#b6c2e1;
+      --brand:#0ea5e9; /* sky-500 */
+      --accent:#22c55e; /* green-500 */
+      --ring:rgba(14,165,233,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f7fbff; --panel:#ffffff; --soft:#f1f5ff; --text:#111827; --muted:#475569; --ring:rgba(14,165,233,.25); }
+      body{ background-image: radial-gradient(60rem 60rem at 110% -10%, rgba(14,165,233,.08), transparent), radial-gradient(80rem 80rem at -10% 110%, rgba(34,197,94,.07), transparent); }
+    }
+    body{font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.6;}
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px; margin:0 auto; padding:28px 20px 80px}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:color-mix(in oklab, var(--brand) 18%, transparent); color:var(--text); border:1px solid color-mix(in oklab, var(--brand) 35%, transparent)}
+    .btn{display:inline-flex; align-items:center; gap:.6rem; background:var(--brand); color:white; padding:.9rem 1.1rem; border-radius:12px; box-shadow:var(--shadow); border:0; cursor:pointer; transition:.2s transform ease}
+    .btn:hover{transform:translateY(-2px)}
+    .btn.secondary{background:transparent; color:var(--text); border:1px solid color-mix(in oklab, var(--text) 16%, transparent)}
+    header.hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:28px; align-items:center; margin-top:10px}
+    header .card{background:var(--panel); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow)}
+    .avatar{width:132px; height:132px; border-radius:50%; object-fit:cover; border:3px solid color-mix(in oklab, var(--brand) 50%, transparent); box-shadow:0 10px 30px rgba(14,165,233,.25)}
+    h1{font-size:clamp(28px, 4vw, 44px); line-height:1.15; margin:0 0 12px}
+    p.lead{font-size:1.1rem; color:var(--muted); margin:.4rem 0 1rem}
+    .links{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px}
+    .grid{display:grid; gap:18px}
+    .grid.cols-3{grid-template-columns: repeat(3, minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns: repeat(2, minmax(0,1fr))}
+    @media (max-width:900px){ header.hero{grid-template-columns:1fr} .grid.cols-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:640px){ .grid.cols-3,.grid.cols-2{grid-template-columns:1fr} }
+    section{margin-top:48px}
+    section h2{font-size:1.6rem; margin:0 0 14px}
+    .card{background:var(--panel); border:1px solid color-mix(in oklab, var(--text) 12%, transparent); border-radius:var(--radius); padding:20px}
+    .project{display:flex; flex-direction:column; gap:10px}
+    .project .tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{padding:.25rem .55rem; border-radius:999px; font-size:.85rem; border:1px solid color-mix(in oklab, var(--text) 16%, transparent); background:var(--soft); color:var(--muted)}
+    .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .kpi{background:var(--soft); border-radius:12px; padding:14px; border:1px solid color-mix(in oklab, var(--text) 10%, transparent)}
+    .kpi .n{font-size:1.4rem; font-family:var(--mono)}
+    .resume{display:flex; gap:12px; flex-wrap:wrap}
+    .timeline{border-left:2px solid color-mix(in oklab, var(--text) 14%, transparent); margin-left:10px; padding-left:18px; display:flex; flex-direction:column; gap:16px}
+    .tl-item{position:relative}
+    .tl-item::before{content:""; position:absolute; left:-11px; top:.35rem; width:10px; height:10px; background:var(--brand); border-radius:50%; box-shadow:0 0 0 4px var(--ring)}
+    footer{margin-top:64px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+    /* Focus */
+    :focus{outline:2px solid var(--ring); outline-offset:2px}
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "당신의 이름",
+    "url": "https://your-domain.example",
+    "jobTitle": "직함 또는 역할",
+    "sameAs": ["https://github.com/yourid","https://www.linkedin.com/in/yourid/"]
+  }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- ===== Hero ===== -->
+    <header class="hero">
+      <div class="card">
+        <span class="chip">👋 안녕하세요!</span>
+        <h1>당신의 이름 <span style="font-weight:400; color:var(--muted)">Portfolio</span></h1>
+        <p class="lead">한 줄 소개를 적어주세요. 예) 반도체 설비/레이아웃 플래너 · Smart Construction · Python & AutoCAD LISP 애호가.</p>
+        <div class="links">
+          <a class="btn" href="#projects" aria-label="프로젝트로 이동">프로젝트 보기</a>
+          <a class="btn secondary" href="#about">소개</a>
+          <a class="btn secondary" href="#contact">연락처</a>
+        </div>
+      </div>
+      <div class="card" style="display:flex; align-items:center; justify-content:center; text-align:center">
+        <div>
+          <img class="avatar" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=300&q=80" alt="프로필 이미지"/>
+          <div style="margin-top:12px; color:var(--muted)">프로필 이미지를 바꾸세요</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== KPIs / Highlights ===== -->
+    <section aria-labelledby="highlights">
+      <h2 id="highlights">하이라이트</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="n">8+년</div><div>경력</div></div>
+        <div class="kpi"><div class="n">P3 · V2</div><div>FAB 레이아웃</div></div>
+        <div class="kpi"><div class="n">Python</div><div>SmartLayout 툴</div></div>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects" aria-labelledby="proj">
+      <h2 id="proj">대표 프로젝트</h2>
+      <div class="grid cols-3">
+        <article class="card project">
+          <div>
+            <h3 style="margin:0">SmartLayout 배치 최적화</h3>
+            <p class="lead">Excel/Pandas 기반 설비 배치 자동화. 면적·용량 제약, Shortage 탐지, 우선순위 규칙 적용.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Optimization</span>
+          </div>
+          <div class="links">
+            <a href="#" aria-label="프로젝트 상세">자세히</a>
+            <a href="#" aria-label="GitHub">GitHub</a>
+          </div>
+        </article>
+        <article class="card project">
+          <div>
+            <h3 style="margin:0">AutoCAD LISP 툴킷</h3>
+            <p class="lead">직사각형 확장, 면적 집계, 도면 정리 자동화 스크립트 패키지.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">AutoCAD</span><span class="tag">LISP</span><span class="tag">CAD</span>
+          </div>
+          <div class="links">
+            <a href="#">자세히</a>
+            <a href="#">GitHub</a>
+          </div>
+        </article>
+        <article class="card project">
+          <div>
+            <h3 style="margin:0">가위바위보 카드 배틀</h3>
+            <p class="lead">21인 이상 대규모 보드게임 규칙 및 시뮬레이터 제작.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Simulation</span><span class="tag">Game</span>
+          </div>
+          <div class="links">
+            <a href="#">자세히</a>
+            <a href="#">규칙서</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">소개</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <p>설비·레이아웃 기획, Smart Construction, Virtual FAB에 관심이 많습니다. 공급·유틸리티·운영을 통합해 대규모 FAB 프로젝트를 효율화하는 데 강점이 있습니다.</p>
+          <div class="resume">
+            <a class="btn" href="/resume.pdf" download>이력서 다운로드</a>
+            <a class="btn secondary" href="mailto:you@example.com">이메일</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="timeline">
+            <div class="tl-item"><strong>2023–현재</strong> · 라인기획/스마트컨스트럭션 – P3/V2</div>
+            <div class="tl-item"><strong>2020–2023</strong> · CVD 공정/신규 FAB 셋업</div>
+            <div class="tl-item"><strong>2017–2020</strong> · 초기 경력/프로세스 엔지니어</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">연락처</h2>
+      <div class="card">
+        <p>협업 제안 · 프로젝트 문의는 아래로 연락 주세요.</p>
+        <ul>
+          <li>📧 <a href="mailto:you@example.com">you@example.com</a></li>
+          <li>💼 <a href="https://www.linkedin.com/in/yourid/">LinkedIn</a></li>
+          <li>🐙 <a href="https://github.com/yourid">GitHub</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> 당신의 이름. All rights reserved.</div>
+      <div>Made with ♥ – <a href="#top">맨 위로</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // 연도 자동 업데이트
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 외부 링크 새탭, 접근성 향상
+    for (const a of document.querySelectorAll('a[href^="http"], a[target="_blank"]')){
+      a.setAttribute('target','_blank');
+      a.setAttribute('rel','noopener noreferrer');
+    }
+  </script>
+</body>
+</html>
